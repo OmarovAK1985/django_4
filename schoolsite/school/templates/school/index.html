@@ -1,0 +1,38 @@
+{% extends 'school/base.html' %}
+
+
+{% block body %}
+
+{% for teacher in teachers %}
+{% if teacher.student.all|length > 0 %}
+<p class="text-info">ФИО Преподавателя: {{teacher.name}} Предмет: {{teacher.subject}}</p>
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th class="col-2">№ п/п</th>
+        <th class="col-5">Имя ученика</th>
+        <th class="col-5">Номер класса</th>
+    </tr>
+    </thead>
+    {%  for student in teacher.student.all %}
+    <tbody>
+        <tr>
+            <td class="col-2"> {{ forloop.counter }}</td>
+            <td class="col-5">{{ student.name }}</td>
+            <td class="col-5">{{ student.group }}</td>
+
+        </tr>
+    </tbody>
+    {% endfor%}
+</table>
+
+{% else %}
+<p class="text-danger">У учителя {{teacher.name}} преподающего {{teacher.subject}} пока нет студентов</p>
+{% endif%}
+
+
+{% endfor %}
+
+
+
+{% endblock body %}
